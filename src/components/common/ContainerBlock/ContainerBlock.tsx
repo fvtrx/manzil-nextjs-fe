@@ -1,8 +1,6 @@
 import Footer from "@src/components/common/Footer/Footer";
-import Navbar from "@src/components/common/Navbar/Navbar";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { lazy } from "react";
 
 interface IContainerBlock {
   children?: React.ReactNode;
@@ -19,14 +17,14 @@ export default function ContainerBlock({ children, meta }: IContainerBlock) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta
+        {/* <meta
           property="og:url"
-          content={`https://nikahshooter.com${router.asPath}`}
+          content={`https://syifa.com${router.asPath}`}
         />
         <link
           rel="canonical"
           href={`https://nikahshooter.com${router.asPath}`}
-        />
+        /> */}
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />
@@ -37,8 +35,7 @@ export default function ContainerBlock({ children, meta }: IContainerBlock) {
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
       </Head>
-      <main className="w-full">
-        <Navbar />
+      <main className="w-full h-screen">
         <div>{children}</div>
         <Footer />
       </main>
