@@ -35,7 +35,7 @@ export default function ContainerBlock({ children, meta }: IContainerBlock) {
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
       </Head>
-      <main className="w-full h-screen">
+      <main className="w-full h-full">
         <div>{children}</div>
         <Footer />
       </main>
