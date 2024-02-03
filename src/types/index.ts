@@ -20,5 +20,17 @@ export interface IRecitationItem {
   };
 }
 
+export interface IAyahAudioItem {
+  id: number;
+  audio_url: string;
+  surahName: string;
+  verseNumber: string;
+}
+
+export interface IAyahState {
+  ayahAudioList: IAyahAudioItem[];
+  isLoading: boolean;
+}
+
 export const BASE_URL = process.env.NEXT_PUBLIC_QURAN_BASE_URL || "";
 export const AUDIO_URL = process.env.NEXT_PUBLIC_QURAN_AUDIO_URL || "";
