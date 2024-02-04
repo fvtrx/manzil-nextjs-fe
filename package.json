@@ -12,6 +12,7 @@
     "@nextui-org/react": "^2.2.9",
     "@reduxjs/toolkit": "1.8.3",
     "@types/react-lottie": "^1.2.7",
+    "@vercel/analytics": "^1.1.2",
     "axios": "^1.6.7",
     "connected-next-router": "^4.2.0",
     "cuid": "^3.0.0",
