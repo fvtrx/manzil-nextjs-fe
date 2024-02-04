@@ -3,6 +3,7 @@ export interface IMeta {
   description: string;
   type: string;
   image: string;
+  url: string;
 }
 
 export interface IHeroTitleProps {
