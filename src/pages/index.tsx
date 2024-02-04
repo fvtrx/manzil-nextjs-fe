@@ -5,6 +5,9 @@ import HeroTitle from "@src/components/common/HeroTitle";
 import {
   getSurahAlBaqarah,
   getSurahAlFatihah,
+  getSurahAlImran,
+  getSurahAlJinn,
+  getSurahAlMukminun,
   setLoading,
 } from "@src/redux/actions/ayahAction";
 import { IAppRootState } from "@src/redux/reducers";
@@ -29,23 +32,37 @@ const meta: IMeta = {
 interface IHomeProps {
   getSurahAlFatihah: () => void;
   getSurahAlBaqarah: () => void;
+  getSurahAlImran: () => void;
+  getSurahAlMukminun: () => void;
+  getSurahAlJinn: () => void;
   setLoading: (payload: boolean) => void;
 }
 
 const Home = ({
   getSurahAlFatihah,
-  setLoading,
   getSurahAlBaqarah,
+  getSurahAlImran,
+  getSurahAlMukminun,
+  getSurahAlJinn,
+  setLoading,
 }: IHomeProps) => {
   const isLoading = useSelector(getLoading);
   const ayahAudioList = useSelector(getAyahAudioList);
 
-  const sortedAyahAudioList = ayahAudioList.sort((a, b) => a.id - b.id);
+  const sortedAyahAudioList = ayahAudioList.sort(
+    (a, b) => a.chapter_id - b.chapter_id
+  );
 
   useEffect(() => {
     const runAllFunctions = async () => {
       try {
-        await Promise.all([getSurahAlFatihah(), getSurahAlBaqarah()]);
+        await Promise.all([
+          getSurahAlFatihah(),
+          getSurahAlBaqarah(),
+          getSurahAlImran(),
+          getSurahAlMukminun(),
+          getSurahAlJinn(),
+        ]);
         setTimeout(() => {
           setLoading(true);
         }, 2000);
@@ -104,6 +121,9 @@ const mapStateToProps = (state: IAppRootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getSurahAlFatihah: () => dispatch(getSurahAlFatihah()),
   getSurahAlBaqarah: () => dispatch(getSurahAlBaqarah()),
+  getSurahAlImran: () => dispatch(getSurahAlImran()),
+  getSurahAlMukminun: () => dispatch(getSurahAlMukminun()),
+  getSurahAlJinn: () => dispatch(getSurahAlJinn()),
   setLoading: (payload: boolean) => dispatch(setLoading(payload)),
 });
 

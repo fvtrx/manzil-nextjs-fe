@@ -25,6 +25,7 @@ export interface IAyahAudioItem {
   audio_url: string;
   surahName: string;
   verseNumber: string;
+  chapter_id: number;
 }
 
 export interface IAyahState {
@@ -57,7 +58,8 @@ export interface IAudioItem {
   id: number;
   surahName: string;
   audio_url: string;
-  verseNumber: string;
+  verseNumber: number;
+  chapter_id: number;
 }
 
 export enum AlBaqarahVerseKey {
@@ -73,6 +75,20 @@ export enum AlBaqarahVerseKey {
   AYAH_284 = "2:284",
   AYAH_285 = "2:285",
   AYAH_286 = "2:286",
+}
+
+export enum AlImranVerseKey {
+  AYAH_18 = "3:18",
+}
+
+export enum AlMukminunVerseKey {
+  AYAH_116 = "23:116",
+  AYAH_117 = "23:117",
+  AYAH_118 = "23:118",
+}
+
+export enum AlJinnVerseKey {
+  AYAH_3 = "72:3",
 }
 
 export const BASE_URL = process.env.NEXT_PUBLIC_QURAN_BASE_URL || "";
