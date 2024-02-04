@@ -26,7 +26,8 @@ const meta: IMeta = {
   description:
     "A list of ayahs that heals and protects against unwanted things",
   type: "website",
-  image: "/favicon.ico",
+  image: "/manzil-logo.png",
+  url: "https://quran-manzil.vercel.app/",
 };
 
 interface IHomeProps {
