@@ -66,8 +66,6 @@ const Home = ({
           subtitle="A collection of ayahs that heals and protects against unwanted things."
         />
 
-        <div></div>
-
         {sortedAyahAudioList.length > 0 ? (
           <div className="max-w-6xl py-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 mx-auto place-items-center gap-6">
             {sortedAyahAudioList?.map(
@@ -75,19 +73,21 @@ const Home = ({
                 { audio_url, surahName, verseNumber }: IAyahAudioItem,
                 index
               ) => (
-                <Skeleton
-                  key={index}
-                  isLoaded={isLoading}
-                  className="rounded-xl dark"
-                  classNames={{ base: "bg-slate-500" }}
-                >
-                  <Card
-                    index={index}
-                    audioSrc={audio_url}
-                    title={surahName}
-                    description={verseNumber}
-                  />
-                </Skeleton>
+                <>
+                  <Skeleton
+                    key={index}
+                    isLoaded={isLoading}
+                    className="rounded-xl dark"
+                    classNames={{ base: "bg-slate-500" }}
+                  >
+                    <Card
+                      index={index}
+                      audioSrc={audio_url}
+                      title={surahName}
+                      description={verseNumber}
+                    />
+                  </Skeleton>
+                </>
               )
             )}
           </div>
