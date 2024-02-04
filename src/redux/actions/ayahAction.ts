@@ -20,7 +20,7 @@ export const getSurahAlBaqarah = () =>
 
 export const getAyahAudioList = () =>
   action(IAyahActionType.GET_AYAH_AUDIO_LIST);
-export const setAyahAudioList = (payload: any) =>
+export const setAyahAudioList = (payload: IAyahAudioItem | any) =>
   action(IAyahActionType.SET_AYAH_AUDIO_LIST, payload);
 export const resetAyahAudioList = () =>
   action(IAyahActionType.RESET_AYAH_AUDIO_LIST);

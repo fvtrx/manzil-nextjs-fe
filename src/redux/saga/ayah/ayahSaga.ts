@@ -2,31 +2,43 @@ import {
   IAyahActionType,
   setAyahAudioList,
 } from "@src/redux/actions/ayahAction";
-import { BASE_URL, IAyahAudioItem } from "@src/types";
+import {
+  AlBaqarahVerseKey,
+  IAudioItem,
+  IChapterAudioResponse,
+  IVerseAudio,
+  IVerseAudioResponse,
+} from "@src/types";
 import { AxiosInstanceAPI } from "@src/utils/APICall";
+import { fork, put, takeEvery, takeLatest } from "redux-saga/effects";
 
-import axios from "axios";
-import { delay, fork, put, takeEvery, takeLatest } from "redux-saga/effects";
+function checkVerseKeyExists(
+  item: IVerseAudio,
+  id: number
+): IAudioItem | undefined {
+  switch (item?.verse_key) {
+    case AlBaqarahVerseKey.AYAH_1:
+    case AlBaqarahVerseKey.AYAH_2:
+    case AlBaqarahVerseKey.AYAH_3:
+    case AlBaqarahVerseKey.AYAH_4:
+    case AlBaqarahVerseKey.AYAH_5:
+    case AlBaqarahVerseKey.AYAH_163:
+    case AlBaqarahVerseKey.AYAH_255:
+    case AlBaqarahVerseKey.AYAH_256:
+    case AlBaqarahVerseKey.AYAH_257:
+    case AlBaqarahVerseKey.AYAH_284:
+    case AlBaqarahVerseKey.AYAH_285:
+    case AlBaqarahVerseKey.AYAH_286:
+      return {
+        id: id + 1,
+        surahName: "Al-Baqarah",
+        audio_url: `https://verses.quran.com/${item?.url}`,
+        verseNumber: `${id + 1}`,
+      };
 
-interface IAudio {
-  audio_url: "https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3";
-  chapter_id: 1;
-  file_size: 839808;
-  format: "mp3";
-  id: 911;
-}
-
-interface IChapterAudioResponse {
-  audio_file: IAudio;
-}
-
-interface IVerseAudio {
-  verse_key: string;
-  url: string;
-}
-
-interface IVerseAudioResponse {
-  audio_files: IVerseAudio[];
+    default:
+      return undefined;
+  }
 }
 
 function* getSurahAlFatihah() {
@@ -60,20 +72,16 @@ function* getSurahAlBaqarah() {
     });
 
     if (audio_files) {
-      const mappedAudioItems = audio_files
-        .slice(0, 5)
+      const mappedAlBaqarahAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
-          return {
-            id: id + 1,
-            surahName: "Al-Baqarah",
-            audio_url: `https://verses.quran.com/${item?.url}`,
-            verseNumber: `${id + 1}`,
-          } as IAyahAudioItem;
+          const data = checkVerseKeyExists(item, id);
+          return data;
         })
-        .sort((a, b) => b.id - a.id);
+        .filter((item) => item !== undefined)
+        .sort((a: IAudioItem | any, b: IAudioItem | any) => b?.id - a?.id);
 
-      for (let i = 0; i < mappedAudioItems.length; i++) {
-        yield put(setAyahAudioList(mappedAudioItems[i]));
+      for (let i = 0; i < mappedAlBaqarahAudioItems.length; i++) {
+        yield put(setAyahAudioList(mappedAlBaqarahAudioItems[i]));
       }
     }
   } catch (error) {
