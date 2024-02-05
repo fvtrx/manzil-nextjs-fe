@@ -55,4 +55,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 Thanks to all the contributors that contributed to this project.
 
 <!-- readme: contributors -start -->
+<table>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/fvtrx">
+                <img src="https://avatars.githubusercontent.com/u/48309262?v=4" width="100;" alt="fvtrx"/>
+                <br />
+                <sub><b>Abdullah Fitri</b></sub>
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/allaboutevemirolive">
+                <img src="https://avatars.githubusercontent.com/u/112833599?v=4" width="100;" alt="allaboutevemirolive"/>
+                <br />
+                <sub><b>Akmal</b></sub>
+            </a>
+        </td>
+    </tr>
+</table>
 <!-- readme: contributors -end -->
