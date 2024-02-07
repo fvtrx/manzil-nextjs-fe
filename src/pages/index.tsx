@@ -117,7 +117,7 @@ const Home = ({
           subtitle="A collection of ayahs that heals and protects against unwanted things."
         />
 
-        <div className="py-8 px-36 text-center mx-auto">
+        <div className="py-8 px-24 lg:px-36 text-center mx-auto">
           <blockquote className="text-xl font-semibold text-white">
             <svg
               className="w-6 h-6 text-gray-400 mb-4"
