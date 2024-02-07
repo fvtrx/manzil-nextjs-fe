@@ -69,7 +69,7 @@ export function checkVerseKeyExists(
     case AsSaffatVerseKey.AYAH_9:
     case AsSaffatVerseKey.AYAH_10:
       data = {
-        id: id + 1,
+        id: id + 20,
         surahName: "As-Saffat",
         audio_url: `https://verses.quran.com/${item?.url}`,
         verseNumber: id + 1,
