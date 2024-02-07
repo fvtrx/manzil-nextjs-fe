@@ -16,6 +16,11 @@ interface ICardProps {
   surahUrl: IAyahUrlItem[];
 }
 
+const handleSubmit = (link: string) => {
+  console.log("doing something");
+  window.open(link, "_blank");
+};
+
 export default function Card({
   index,
   title,
@@ -38,9 +43,12 @@ export default function Card({
             {surahUrl.map((item: IAyahUrlItem) => (
               <p className="border px-2 border-white/20">
                 Verse:{" "}
-                <Link className="hover:text-blue-500" href={item.src}>
+                <a
+                  className="hover:text-blue-500 hover:cursor-pointer"
+                  onClick={() => handleSubmit(item.src)}
+                >
                   {item.ayat}
-                </Link>
+                </a>
               </p>
             ))}
           </div>
