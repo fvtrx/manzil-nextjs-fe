@@ -3,76 +3,14 @@ import {
   setAyahAudioList,
 } from "@src/redux/actions/ayahAction";
 import {
-  AlBaqarahVerseKey,
-  AlImranVerseKey,
-  AlJinnVerseKey,
-  AlMukminunVerseKey,
   IAudioItem,
   IChapterAudioResponse,
   IVerseAudio,
   IVerseAudioResponse,
 } from "@src/types";
 import { AxiosInstanceAPI } from "@src/utils/APICall";
+import { checkVerseKeyExists } from "@src/utils/checkVerseKey";
 import { fork, put, takeEvery, takeLatest } from "redux-saga/effects";
-
-function checkVerseKeyExists(
-  item: IVerseAudio,
-  id: number
-): IAudioItem | undefined {
-  switch (item?.verse_key) {
-    case AlBaqarahVerseKey.AYAH_1:
-    case AlBaqarahVerseKey.AYAH_2:
-    case AlBaqarahVerseKey.AYAH_3:
-    case AlBaqarahVerseKey.AYAH_4:
-    case AlBaqarahVerseKey.AYAH_5:
-    case AlBaqarahVerseKey.AYAH_163:
-    case AlBaqarahVerseKey.AYAH_255:
-    case AlBaqarahVerseKey.AYAH_256:
-    case AlBaqarahVerseKey.AYAH_257:
-    case AlBaqarahVerseKey.AYAH_284:
-    case AlBaqarahVerseKey.AYAH_285:
-    case AlBaqarahVerseKey.AYAH_286:
-      return {
-        id: id + 1,
-        surahName: "Al-Baqarah",
-        audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: id + 1,
-        chapter_id: 2,
-      };
-
-    case AlImranVerseKey.AYAH_18:
-      return {
-        id: 15,
-        surahName: "Al-Imran",
-        audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: 18,
-        chapter_id: 3,
-      };
-
-    case AlMukminunVerseKey.AYAH_116:
-    case AlMukminunVerseKey.AYAH_117:
-    case AlMukminunVerseKey.AYAH_118:
-      return {
-        id: id + 1,
-        surahName: "Al-Mukminun",
-        audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: id + 1,
-        chapter_id: 23,
-      };
-
-    case AlJinnVerseKey.AYAH_3:
-      return {
-        id: 16,
-        surahName: "Al-Jinn",
-        audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: 3,
-        chapter_id: 72,
-      };
-
-    default:
-      return undefined;
-  }
-}
 
 function* getSurahAlFatihah() {
   try {
@@ -108,7 +46,7 @@ function* getSurahAlBaqarah() {
     if (audio_files) {
       const mappedAlBaqarahAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
-          const data = checkVerseKeyExists(item, id);
+          const { data } = checkVerseKeyExists(item, id);
           return data;
         })
         .filter((item) => item !== undefined)
@@ -138,7 +76,7 @@ function* getSurahAlImran() {
     if (audio_files) {
       const mappedAlImranAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
-          const data = checkVerseKeyExists(item, id);
+          const { data } = checkVerseKeyExists(item, id);
           return data;
         })
         .filter((item) => item !== undefined);
@@ -162,7 +100,7 @@ function* getSurahAlMukminun() {
     if (audio_files) {
       const mappedAlMukminunAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
-          const data = checkVerseKeyExists(item, id);
+          const { data } = checkVerseKeyExists(item, id);
           return data;
         })
         .filter((item) => item !== undefined)
@@ -173,6 +111,66 @@ function* getSurahAlMukminun() {
 
       for (let i = 0; i < mappedAlMukminunAudioItems.length; i++) {
         yield put(setAyahAudioList(mappedAlMukminunAudioItems[i]));
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getSurahAsSaffat() {
+  try {
+    const { audio_files }: IVerseAudioResponse = yield AxiosInstanceAPI({
+      endpoint: "/quran/recitations/7",
+      params: {
+        chapter_number: 37,
+      },
+    });
+
+    if (audio_files) {
+      const mappedAlSaffatAudioItems = audio_files
+        .map((item: IVerseAudio, id: number) => {
+          const { data } = checkVerseKeyExists(item, id);
+          return data;
+        })
+        .filter((item) => item !== undefined)
+        .sort(
+          (a: IAudioItem | any, b: IAudioItem | any) =>
+            a?.verseNumber - b?.verseNumber
+        );
+
+      for (let i = 0; i < mappedAlSaffatAudioItems.length; i++) {
+        yield put(setAyahAudioList(mappedAlSaffatAudioItems[i]));
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getSurahAlHasyr() {
+  try {
+    const { audio_files }: IVerseAudioResponse = yield AxiosInstanceAPI({
+      endpoint: "/quran/recitations/7",
+      params: {
+        chapter_number: 59,
+      },
+    });
+
+    if (audio_files) {
+      const mappedAlHasyrAudioItems = audio_files
+        .map((item: IVerseAudio, id: number) => {
+          const { data } = checkVerseKeyExists(item, id);
+          return data;
+        })
+        .filter((item) => item !== undefined)
+        .sort(
+          (a: IAudioItem | any, b: IAudioItem | any) =>
+            a?.verseNumber - b?.verseNumber
+        );
+
+      for (let i = 0; i < mappedAlHasyrAudioItems.length; i++) {
+        yield put(setAyahAudioList(mappedAlHasyrAudioItems[i]));
       }
     }
   } catch (error) {
@@ -192,12 +190,78 @@ function* getSurahAlJinn() {
     if (audio_files) {
       const mappedAlMukminunAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
-          const data = checkVerseKeyExists(item, id);
+          const { data } = checkVerseKeyExists(item, id);
           return data;
         })
         .filter((item) => item !== undefined);
 
       yield put(setAyahAudioList(mappedAlMukminunAudioItems[0]));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getSurahAlIkhlas() {
+  try {
+    const { audio_file }: IChapterAudioResponse = yield AxiosInstanceAPI({
+      endpoint: "/chapter_recitations/7/112",
+    });
+
+    if (audio_file) {
+      yield put(
+        setAyahAudioList({
+          id: 112,
+          surahName: "Al-Ikhlas",
+          audio_url: audio_file?.audio_url,
+          verseNumber: "1-4",
+          chapter_id: 112,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getSurahAlFalaq() {
+  try {
+    const { audio_file }: IChapterAudioResponse = yield AxiosInstanceAPI({
+      endpoint: "/chapter_recitations/7/113",
+    });
+
+    if (audio_file) {
+      yield put(
+        setAyahAudioList({
+          id: 113,
+          surahName: "Al-Falaq",
+          audio_url: audio_file?.audio_url,
+          verseNumber: "1-5",
+          chapter_id: 113,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getSurahAnNas() {
+  try {
+    const { audio_file }: IChapterAudioResponse = yield AxiosInstanceAPI({
+      endpoint: "/chapter_recitations/7/114",
+    });
+
+    if (audio_file) {
+      yield put(
+        setAyahAudioList({
+          id: 114,
+          surahName: "An-Nas",
+          audio_url: audio_file?.audio_url,
+          verseNumber: "1-6",
+          chapter_id: 114,
+        })
+      );
     }
   } catch (error) {
     console.log(error);
@@ -210,6 +274,11 @@ function* watchAyahSaga() {
   yield takeEvery(IAyahActionType.GET_SURAH_AL_IMRAN, getSurahAlImran);
   yield takeEvery(IAyahActionType.GET_SURAH_AL_MUKMINUN, getSurahAlMukminun);
   yield takeEvery(IAyahActionType.GET_SURAH_AL_JINN, getSurahAlJinn);
+  yield takeEvery(IAyahActionType.GET_SURAH_AL_HASYR, getSurahAlHasyr);
+  yield takeEvery(IAyahActionType.GET_SURAH_AS_SAFFAT, getSurahAsSaffat);
+  yield takeEvery(IAyahActionType.GET_SURAH_AL_IKHLAS, getSurahAlIkhlas);
+  yield takeEvery(IAyahActionType.GET_SURAH_AL_FALAQ, getSurahAlFalaq);
+  yield takeEvery(IAyahActionType.GET_SURAH_AN_NAS, getSurahAnNas);
 }
 
 const ayahSaga = [fork(watchAyahSaga)];
