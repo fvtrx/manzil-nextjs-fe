@@ -21,6 +21,20 @@ export interface IRecitationItem {
   };
 }
 
+export interface IHomeProps {
+  getSurahAlFatihah: () => void;
+  getSurahAlBaqarah: () => void;
+  getSurahAlImran: () => void;
+  getSurahAlMukminun: () => void;
+  getSurahAlJinn: () => void;
+  getSurahAlHasyr: () => void;
+  getSurahAsSaffat: () => void;
+  getSurahAlIkhlas: () => void;
+  getSurahAlFalaq: () => void;
+  getSurahAnNas: () => void;
+  setLoading: (payload: boolean) => void;
+}
+
 export interface IAyahAudioItem {
   id: number;
   audio_url: string;
@@ -86,6 +100,25 @@ export enum AlMukminunVerseKey {
   AYAH_116 = "23:116",
   AYAH_117 = "23:117",
   AYAH_118 = "23:118",
+}
+
+export enum AsSaffatVerseKey {
+  AYAH_1 = "37:1",
+  AYAH_2 = "37:2",
+  AYAH_3 = "37:3",
+  AYAH_4 = "37:4",
+  AYAH_5 = "37:5",
+  AYAH_6 = "37:6",
+  AYAH_7 = "37:7",
+  AYAH_8 = "37:8",
+  AYAH_9 = "37:9",
+  AYAH_10 = "37:10",
+}
+
+export enum AlHasyrVerseKey {
+  AYAH_22 = "59:22",
+  AYAH_23 = "59:23",
+  AYAH_24 = "59:24",
 }
 
 export enum AlJinnVerseKey {
