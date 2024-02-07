@@ -55,14 +55,12 @@ const Home = ({
   const ayahAudioList = useSelector(getAyahAudioList);
   const [playlistIndex, setPlaylistIndex] = useState<number>(0);
 
-  const sortedAyahAudioList = ayahAudioList
-    .filter((item) => item !== undefined)
-    .sort((a, b) => a.chapter_id - b.chapter_id);
+  const sortedAyahAudioList = ayahAudioList.sort(
+    (a, b) => a.chapter_id - b.chapter_id
+  );
 
   const playPreviousTrack = () => {
-    setPlaylistIndex((prevIndex) =>
-      Math.max(playlistIndex === 0 ? 0 : prevIndex - 1, 0)
-    );
+    setPlaylistIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
   const playNextTrack = () => {
@@ -74,6 +72,7 @@ const Home = ({
   const setPlaylistIndexBasedOnArray = (sortedArray: Array<IAyahAudioItem>) => {
     // @ts-ignore
     const index = sortedArray.findIndex((item, index) => item[index]);
+    console.log(">>>>", index);
 
     if (index !== -1) {
       setPlaylistIndex(index);
