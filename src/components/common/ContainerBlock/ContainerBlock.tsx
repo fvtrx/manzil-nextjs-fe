@@ -30,7 +30,7 @@ export default function ContainerBlock({ children, meta }: IContainerBlock) {
         <meta name="twitter:image" content={meta?.image} />
         <meta property="twitter:url" content={meta?.url} />
       </Head>
-      <main className="w-full h-full">
+      <main className="w-full h-full bg-black">
         <div>{children}</div>
         <Footer />
       </main>
