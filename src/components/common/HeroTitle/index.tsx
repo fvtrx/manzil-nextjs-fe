@@ -4,7 +4,7 @@ export default function HeroTitle({ title, subtitle }: IHeroTitleProps) {
   return (
     <div>
       <div className="max-w-6xl mx-auto h-48 sm:px-4 lg:px-0">
-        <h1 className="text-4xl md:text-7xl font-bold py-20 text-center">
+        <h1 className="text-4xl md:text-7xl font-bold py-20 text-center text-default-800">
           {title}
         </h1>
       </div>

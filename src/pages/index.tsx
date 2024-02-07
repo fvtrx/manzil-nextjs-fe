@@ -111,7 +111,7 @@ const Home = ({
 
   return (
     <ContainerBlock meta={meta}>
-      <div>
+      <div className="bg-black">
         <HeroTitle
           title="منزل"
           subtitle="A collection of ayahs that heals and protects against unwanted things."
@@ -141,9 +141,9 @@ const Home = ({
           </blockquote>
         </div>
 
-        <div className="max-w-6xl mx-auto place-items-center w-2/3 lg:w-1/3 py-4">
+        <div className="max-w-6xl mx-auto place-items-center w-full lg:w-1/3 py-4">
           <div className="py-8 text-center mx-auto">
-            <h2 className="">
+            <h2 className="text-default-800">
               Click <kbd className="underline">Play</kbd> to start listening to
               Manzil
             </h2>
@@ -181,7 +181,7 @@ const Home = ({
           </Skeleton>
         </div>
 
-        <div className="py-8 text-center mx-auto">
+        <div className="py-8 text-center mx-auto text-default-800">
           <h2 className=" font-bold text-2xl">Verse List</h2>
         </div>
 
