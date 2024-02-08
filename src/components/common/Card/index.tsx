@@ -7,6 +7,7 @@ import {
   Divider,
 } from "@nextui-org/react";
 import { IAyahUrlItem } from "@src/data/static/surahList";
+import { setFnTimeout } from "@src/utils/setFnTimeout";
 import Link from "next/link";
 
 interface ICardProps {
@@ -14,18 +15,21 @@ interface ICardProps {
   title: string;
   description: string;
   surahUrl: IAyahUrlItem[];
+  onOpen: () => void;
+  setUrl: CallableFunction;
+  setTitle: CallableFunction;
+  setLoading: CallableFunction;
 }
-
-const handleSubmit = (link: string) => {
-  console.log("doing something");
-  window.open(link, "_blank");
-};
 
 export default function Card({
   index,
   title,
   description,
   surahUrl,
+  onOpen,
+  setUrl,
+  setTitle,
+  setLoading,
 }: ICardProps) {
   return (
     <CardContainer className="w-full">
@@ -45,7 +49,12 @@ export default function Card({
                 Verse:{" "}
                 <a
                   className="hover:text-blue-500 hover:cursor-pointer"
-                  onClick={() => handleSubmit(item.src)}
+                  onClick={() => {
+                    setFnTimeout(setLoading, 1000, true);
+                    setTitle(`${title} - Ayat: ${item.ayat}`);
+                    setUrl(item.src);
+                    onOpen();
+                  }}
                 >
                   {item.ayat}
                 </a>

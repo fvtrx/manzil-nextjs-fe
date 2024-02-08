@@ -1,4 +1,9 @@
-import { Skeleton } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  Skeleton,
+  useDisclosure,
+} from "@nextui-org/react";
 import Card from "@src/components/common/Card";
 import ContainerBlock from "@src/components/common/ContainerBlock/ContainerBlock";
 import HeroTitle from "@src/components/common/HeroTitle";
@@ -27,6 +32,7 @@ import { useEffect, useState } from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { connect, useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 import { Dispatch } from "redux";
 
 const meta: IMeta = {
@@ -53,7 +59,14 @@ const Home = ({
 }: IHomeProps) => {
   const isLoading = useSelector(getLoading);
   const ayahAudioList = useSelector(getAyahAudioList);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+
   const [playlistIndex, setPlaylistIndex] = useState<number>(0);
+  const [modalLoading, setModalLoading] = useState<boolean>(false);
+  const [verseUrl, setVerseUrl] = useState<string>("");
+  const [chapterTitle, setChapterTitle] = useState<string>("");
 
   const sortedAyahAudioList = ayahAudioList.sort(
     (a, b) => a.chapter_id - b.chapter_id
@@ -201,6 +214,10 @@ const Home = ({
                       title={item.surahName}
                       description={item.arabic_surah_name}
                       surahUrl={item.surahUrl}
+                      onOpen={onOpen}
+                      setUrl={setVerseUrl}
+                      setTitle={setChapterTitle}
+                      setLoading={setModalLoading}
                     />
                   </Skeleton>
                 </>
@@ -208,6 +225,36 @@ const Home = ({
           </div>
         ) : null}
       </div>
+
+      <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size={"3xl"}
+        className="px-2 dark"
+        classNames={{
+          backdrop:
+            "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
+        }}
+        placement={isMobile ? "bottom" : "auto"}
+        isDismissable={true}
+        hideCloseButton={false}
+        onClose={() => setModalLoading(false)}
+      >
+        <ModalContent>
+          <h1 className="max-w-2xl py-4 px-4 text-2xl font-extrabold text-white">
+            {chapterTitle}
+          </h1>
+
+          <Skeleton isLoaded={modalLoading} className="rounded-xl">
+            <iframe
+              className="w-full rounded-large"
+              height={600}
+              src={verseUrl}
+            />
+          </Skeleton>
+        </ModalContent>
+      </Modal>
     </ContainerBlock>
   );
 };
