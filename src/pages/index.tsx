@@ -169,10 +169,13 @@ const Home = ({
             </p>
 
             <p className="my-4 italic font-light text-white/85">
-              We send down the Quran as a healing and mercy for the believers,
-              but it only increases the wrongdoers in loss.
+              Dan Kami turunkan dengan beransur-ansur dari Al-Quran Aya-ayat
+              Suci yang menjadi ubat penawar dan rahmat bagi orang-orang yang
+              beriman kepadanya; dan (sebaliknya) Al-Quran tidak menambahkan
+              orang-orang yang zalim (disebabkan keingkaran mereka) melainkan
+              kerugian jua.
               <br />
-              (Surah Al-A'raf: 82)
+              (Surah Al-Isra': 82)
             </p>
           </blockquote>
         </div>
