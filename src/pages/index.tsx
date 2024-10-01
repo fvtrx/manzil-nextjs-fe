@@ -169,13 +169,13 @@ const Home = ({
             </p>
 
             <p className="my-4 italic font-light text-white/85">
-              Dan Kami turunkan dengan beransur-ansur dari Al-Quran Aya-ayat
-              Suci yang menjadi ubat penawar dan rahmat bagi orang-orang yang
-              beriman kepadanya; dan (sebaliknya) Al-Quran tidak menambahkan
-              orang-orang yang zalim (disebabkan keingkaran mereka) melainkan
-              kerugian jua.
+              Dan Kami turunkan dengan beransur-ansur dari Al-Quran (yakni)
+              ayat-ayat Suci yang menjadi ubat penawar dan rahmat bagi
+              orang-orang yang beriman kepadanya; dan (sebaliknya) Al-Quran
+              tidak menambahkan orang-orang yang zalim (disebabkan keingkaran
+              mereka) melainkan kerugian jua.
               <br />
-              (Surah Al-Isra': 82)
+              (Surah Al-Isra': Ayat 82)
             </p>
           </blockquote>
         </div>
