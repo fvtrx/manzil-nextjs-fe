@@ -24,6 +24,7 @@ import { IAyahAudioItem, IHomeProps, IMeta } from "@src/types";
 import { componentsOptions } from "@src/utils/componentOption";
 import useGetSurahList from "@src/utils/queries/get/useGetSurahList";
 import { setFnTimeout } from "@src/utils/setFnTimeout";
+import { BookOpenText } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
@@ -148,7 +149,7 @@ const Home = ({
       <div className="bg-black">
         <HeroTitle
           title="منزل"
-          subtitle="A collection of ayahs that heals and protects against unwanted things."
+          subtitle="Himpunan ayat suci Al-Quran sebagai penawar dan pelindung dari segala kejahatan."
         />
 
         <div className="py-8 px-24 lg:px-36 text-center mx-auto">
@@ -178,7 +179,11 @@ const Home = ({
 
         <div className="max-w-6xl mx-auto w-full flex-1 lg:flex space-y-4">
           <div className="w-full lg:w-1/3 px-4 lg:border-r border-neutral-700 space-y-4">
-            <h1 className="font-bold text-3xl">List of Ayat</h1>
+            <div className="flex flex-1 place-items-center items-center space-x-4">
+              <h1 className="font-bold text-3xl">Senarai Ayat</h1>
+              <BookOpenText />
+            </div>
+
             {isSurahListLoading && <Spinner />}
 
             {!isSurahListLoading && (
@@ -206,7 +211,7 @@ const Home = ({
             )}
           </div>
 
-          <div className="w-full place-items-center items-center px-4 flex-col space-y-4 mx-auto">
+          <div className="w-full place-items-center items-center px-4 flex-col space-y-6 mx-auto">
             {isSurahListLoading && <Spinner />}
 
             {!isSurahListLoading && (

@@ -1,9 +1,13 @@
 import { IHeroTitleProps } from "@src/types";
-import React from "react";
+import Image from "next/image";
 export default function HeroTitle({ title, subtitle }: IHeroTitleProps) {
   return (
     <div>
-      <div className="max-w-6xl mx-auto h-48 sm:px-4 lg:px-0">
+      <div className="flex place-items-center space-x-2 justify-center items-center h-48">
+        <div className="lg:h-24 lg:w-24 h-10 w-10 md:h-24 md:w-24">
+          <Image src="/quran.png" width={200} height={200} alt="Al-Quran" />
+        </div>
+
         <h1 className="text-4xl md:text-7xl font-bold py-20 text-center text-default-800">
           {title}
         </h1>
