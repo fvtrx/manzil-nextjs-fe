@@ -1,6 +1,7 @@
 import { Accordion, AccordionItem, Skeleton, Spinner } from "@nextui-org/react";
 import ContainerBlock from "@src/components/common/ContainerBlock/ContainerBlock";
 import HeroTitle from "@src/components/common/HeroTitle";
+import { OptimizedImage } from "@src/components/OptimizedImage";
 import { ISurahItem } from "@src/data/surahList";
 import {
   getSurahAlBaqarah,
@@ -25,7 +26,6 @@ import { componentsOptions } from "@src/utils/componentOption";
 import useGetSurahList from "@src/utils/queries/get/useGetSurahList";
 import { setFnTimeout } from "@src/utils/setFnTimeout";
 import { BookOpenText } from "lucide-react";
-import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
@@ -219,12 +219,10 @@ const Home = ({
 
             {!isSurahListLoading && (
               <div className="bg-[#1d1e23] p-10 rounded-xl">
-                <Image
+                <OptimizedImage
+                  url={verseUrl}
+                  alt="Verse image"
                   className="border-b border-neutral-700"
-                  alt=""
-                  src={verseUrl}
-                  width={1000}
-                  height={700}
                 />
 
                 <Markdown
