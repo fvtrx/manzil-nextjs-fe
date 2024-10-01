@@ -36,6 +36,7 @@ export interface IHomeProps {
 }
 
 export interface IAyahAudioItem {
+  [k: string]: unknown;
   id: number;
   audio_url: string;
   surahName: string;

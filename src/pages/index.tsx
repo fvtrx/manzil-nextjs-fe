@@ -1,13 +1,7 @@
-import {
-  Modal,
-  ModalContent,
-  Skeleton,
-  useDisclosure,
-} from "@nextui-org/react";
-import Card from "@src/components/common/Card";
+import { Accordion, AccordionItem, Skeleton, Spinner } from "@nextui-org/react";
 import ContainerBlock from "@src/components/common/ContainerBlock/ContainerBlock";
 import HeroTitle from "@src/components/common/HeroTitle";
-import { ISurahItem, surahList } from "@src/data/static/surahList";
+import { ISurahItem } from "@src/data/surahList";
 import {
   getSurahAlBaqarah,
   getSurahAlFalaq,
@@ -27,13 +21,19 @@ import {
   getLoading,
 } from "@src/redux/reducers/ayah/ayahReducer";
 import { IAyahAudioItem, IHomeProps, IMeta } from "@src/types";
+import { componentsOptions } from "@src/utils/componentOption";
+import useGetSurahList from "@src/utils/queries/get/useGetSurahList";
 import { setFnTimeout } from "@src/utils/setFnTimeout";
-import { useEffect, useState } from "react";
+import { BookOpenText } from "lucide-react";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
+import Markdown from "react-markdown";
 import { connect, useSelector } from "react-redux";
-import { useMediaQuery } from "react-responsive";
 import { Dispatch } from "redux";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 const meta: IMeta = {
   title: "منزل - Manzil",
@@ -59,74 +59,97 @@ const Home = ({
 }: IHomeProps) => {
   const isLoading = useSelector(getLoading);
   const ayahAudioList = useSelector(getAyahAudioList);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
-
   const [playlistIndex, setPlaylistIndex] = useState<number>(0);
-  const [modalLoading, setModalLoading] = useState<boolean>(false);
   const [verseUrl, setVerseUrl] = useState<string>("");
-  const [chapterTitle, setChapterTitle] = useState<string>("");
+  const [surahList, setSurahList] = useState<ISurahItem[]>([]);
+  const [translation, setTranslation] = useState();
 
-  const sortedAyahAudioList = ayahAudioList.sort(
-    (a, b) => a.chapter_id - b.chapter_id
+  const sortedAyahAudioList = useMemo(
+    () => [...ayahAudioList].sort((a, b) => a.chapter_id - b.chapter_id),
+    [ayahAudioList]
   );
 
-  const playPreviousTrack = () => {
+  const playPreviousTrack = useCallback(() => {
     setPlaylistIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-  };
+  }, []);
 
-  const playNextTrack = () => {
+  const playNextTrack = useCallback(() => {
     setPlaylistIndex((prevIndex) =>
       Math.min(prevIndex + 1, sortedAyahAudioList.length - 1)
     );
-  };
+  }, [sortedAyahAudioList.length]);
 
-  const setPlaylistIndexBasedOnArray = (sortedArray: Array<IAyahAudioItem>) => {
-    // @ts-ignore
-    const index = sortedArray.findIndex((item, index) => item[index]);
-    console.log(">>>>", index);
+  const setPlaylistIndexBasedOnArray = useCallback(
+    (sortedArray: IAyahAudioItem[]) => {
+      const index = sortedArray.findIndex((item, index) => item[index]);
+      if (index !== -1) {
+        setPlaylistIndex(index);
+      }
+    },
+    []
+  );
 
-    if (index !== -1) {
-      setPlaylistIndex(index);
-    }
-  };
+  const { data, isLoading: isSurahListLoading } = useGetSurahList({
+    refetchOnMount: true,
+  });
 
   useEffect(() => {
-    const runAllFunctions = async () => {
-      try {
-        await Promise.all([
-          getSurahAlFatihah(),
-          getSurahAlBaqarah(),
-          getSurahAlImran(),
-          getSurahAlMukminun(),
-          getSurahAsSaffat(),
-          getSurahAlHasyr(),
-          getSurahAlJinn(),
-          getSurahAlIkhlas(),
-          getSurahAlFalaq(),
-          getSurahAnNas(),
-        ]);
+    if (data?.data) {
+      const respData = data?.data;
+      setSurahList(respData.surahList);
+      setVerseUrl(respData.surahList[0].content[0].src);
+      setTranslation(respData.surahList[0].content[0].translation);
+    }
+  }, [data]);
 
+  useEffect(() => {
+    const getAllAyat = async () => {
+      const surahFunctions = [
+        { name: "Al-Fatihah", fn: getSurahAlFatihah },
+        { name: "Al-Baqarah", fn: getSurahAlBaqarah },
+        { name: "Al-Imran", fn: getSurahAlImran },
+        { name: "Al-Mukminun", fn: getSurahAlMukminun },
+        { name: "Al-Jinn", fn: getSurahAlJinn },
+        { name: "Al-Hasyr", fn: getSurahAlHasyr },
+        { name: "As-Saffat", fn: getSurahAsSaffat },
+        { name: "Al-Ikhlas", fn: getSurahAlIkhlas },
+        { name: "Al-Falaq", fn: getSurahAlFalaq },
+        { name: "An-Nas", fn: getSurahAnNas },
+      ];
+
+      try {
+        await Promise.allSettled(surahFunctions.map(({ fn }) => fn()));
         setFnTimeout(setLoading, 2500, true);
       } catch (error) {
-        console.error("Error occurred:", error);
+        console.error("Error occurred during API calls:", error);
+        setLoading(false);
       }
     };
-
-    runAllFunctions();
-  }, []);
+    getAllAyat();
+  }, [
+    getSurahAlFatihah,
+    getSurahAlBaqarah,
+    getSurahAlImran,
+    getSurahAlMukminun,
+    getSurahAlJinn,
+    getSurahAlHasyr,
+    getSurahAsSaffat,
+    getSurahAlIkhlas,
+    getSurahAlFalaq,
+    getSurahAnNas,
+    setLoading,
+  ]);
 
   useEffect(() => {
     setPlaylistIndexBasedOnArray(sortedAyahAudioList);
-  }, [playlistIndex]);
+  }, [sortedAyahAudioList, setPlaylistIndexBasedOnArray]);
 
   return (
     <ContainerBlock meta={meta}>
       <div className="bg-black">
         <HeroTitle
           title="منزل"
-          subtitle="A collection of ayahs that heals and protects against unwanted things."
+          subtitle="Himpunan ayat suci Al-Quran sebagai penawar dan pelindung dari segala kejahatan."
         />
 
         <div className="py-8 px-24 lg:px-36 text-center mx-auto">
@@ -144,6 +167,7 @@ const Home = ({
               وَنُنَزِّلُ مِنَ ٱلْقُرْءَانِ مَا هُوَ شِفَآءٌۭ وَرَحْمَةٌۭ
               لِّلْمُؤْمِنِينَ ۙ وَلَا يَزِيدُ ٱلظَّـٰلِمِينَ إِلَّا خَسَارًۭا
             </p>
+
             <p className="my-4 italic font-light text-white/85">
               We send down the Quran as a healing and mercy for the believers,
               but it only increases the wrongdoers in loss.
@@ -153,108 +177,100 @@ const Home = ({
           </blockquote>
         </div>
 
-        <div className="max-w-6xl mx-auto place-items-center w-full lg:w-1/3 py-4">
-          <div className="py-8 text-center mx-auto">
-            <h2 className="text-default-800">
-              Click <kbd className="underline">Play</kbd> to start listening to
-              Manzil
-            </h2>
-          </div>
-          <Skeleton
-            isLoaded={isLoading}
-            className="rounded-xl dark"
-            classNames={{ base: "bg-slate-500" }}
-          >
-            <AudioPlayer
-              autoPlay={true}
-              autoPlayAfterSrcChange={true}
-              onEnded={playNextTrack}
-              src={sortedAyahAudioList[playlistIndex]?.audio_url}
-              showSkipControls={true}
-              showJumpControls={false}
-              onClickPrevious={playPreviousTrack}
-              onClickNext={playNextTrack}
-              header={
-                <div className="text-black flex flex-col gap-2">
-                  <div className="font-semibold">
-                    {`Surah ${sortedAyahAudioList[playlistIndex]?.surahName} - ${sortedAyahAudioList[playlistIndex]?.chapter_id}:${sortedAyahAudioList[playlistIndex]?.verseNumber}`}
-                  </div>
-                  <div className="pb-2">Sheikh Mishary Rashid Al-Afa'asy</div>
-                </div>
-              }
-              style={{ borderRadius: "10px" }}
-              layout="horizontal"
-              customProgressBarSection={[
-                RHAP_UI.CURRENT_TIME,
-                RHAP_UI.PROGRESS_BAR,
-                RHAP_UI.CURRENT_LEFT_TIME,
-              ]}
-            />
-          </Skeleton>
-        </div>
+        <div className="max-w-6xl mx-auto w-full flex-1 lg:flex space-y-4">
+          <div className="w-full lg:w-1/3 px-4 lg:border-r border-neutral-700 space-y-4">
+            <div className="flex flex-1 place-items-center items-center space-x-4">
+              <h1 className="font-bold text-3xl">Senarai Ayat</h1>
+              <BookOpenText />
+            </div>
 
-        <div className="py-8 text-center mx-auto text-default-800">
-          <h2 className=" font-bold text-2xl">Verse List</h2>
-        </div>
+            {isSurahListLoading && <Spinner />}
 
-        {surahList.length > 0 ? (
-          <div className="py-8 px-4 md:px-36 lg:px-96 grid grid-cols-1 gap-12 overflow-x-hidden">
-            {surahList
-              ?.sort((a, b) => a.chapter_id - b.chapter_id)
-              .map((item: ISurahItem, index) => (
-                <>
-                  <Skeleton
-                    key={index}
-                    isLoaded={isLoading}
-                    className="rounded-xl dark"
-                    classNames={{ base: "bg-slate-500" }}
+            {!isSurahListLoading && (
+              <Accordion isCompact variant="bordered">
+                {surahList.flatMap((item) => (
+                  <AccordionItem
+                    key={`chapter-${item.chapter_id}`}
+                    title={item.surahName}
+                    className="text-[#0AFDB0]"
                   >
-                    <Card
-                      index={index}
-                      title={item.surahName}
-                      description={item.arabic_surah_name}
-                      surahUrl={item.surahUrl}
-                      onOpen={onOpen}
-                      setUrl={setVerseUrl}
-                      setTitle={setChapterTitle}
-                      setLoading={setModalLoading}
-                    />
-                  </Skeleton>
-                </>
-              ))}
+                    {item.content.flatMap((url) => (
+                      <li
+                        onClick={() => {
+                          setVerseUrl(url.src);
+                          setTranslation(url.translation);
+                        }}
+                        className="cursor-pointer hover:text-blue-500"
+                      >
+                        Ayat {url.ayat}
+                      </li>
+                    ))}
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            )}
           </div>
-        ) : null}
+
+          <div className="w-full place-items-center items-center px-4 flex-col space-y-6 mx-auto">
+            {isSurahListLoading && <Spinner />}
+
+            {!isSurahListLoading && (
+              <div className="bg-[#1d1e23] p-10 rounded-xl">
+                <Image
+                  className="border-b border-neutral-700"
+                  alt=""
+                  src={verseUrl}
+                  width={1000}
+                  height={700}
+                />
+
+                <Markdown
+                  components={componentsOptions}
+                  className="w-full text-neutral text-justify"
+                  rehypePlugins={[rehypeRaw]}
+                  remarkPlugins={[remarkGfm]}
+                >
+                  {translation}
+                </Markdown>
+              </div>
+            )}
+
+            <Skeleton
+              isLoaded={isLoading}
+              className="rounded-xl dark"
+              classNames={{ base: "bg-slate-500" }}
+            >
+              <AudioPlayer
+                autoPlay={true}
+                autoPlayAfterSrcChange={true}
+                onEnded={playNextTrack}
+                src={sortedAyahAudioList[playlistIndex]?.audio_url}
+                showSkipControls={true}
+                showJumpControls={false}
+                onClickPrevious={playPreviousTrack}
+                onClickNext={playNextTrack}
+                header={
+                  <div className="text-black flex flex-col gap-2">
+                    <div className="font-semibold">
+                      {`Surah ${sortedAyahAudioList[playlistIndex]?.surahName} - ${sortedAyahAudioList[playlistIndex]?.chapter_id}:${sortedAyahAudioList[playlistIndex]?.verseNumber}`}
+                    </div>
+                    <div className="pb-2">Sheikh Mishary Rashid Al-Afa'asy</div>
+                  </div>
+                }
+                style={{
+                  borderRadius: "10px",
+                  background: `linear-gradient(to top, #dfe9f3 0%, white 100%)`,
+                }}
+                layout="stacked"
+                customProgressBarSection={[
+                  RHAP_UI.PROGRESS_BAR,
+                  RHAP_UI.CURRENT_LEFT_TIME,
+                ]}
+              />
+            </Skeleton>
+          </div>
+        </div>
       </div>
-
-      <Modal
-        backdrop="opaque"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        size={"3xl"}
-        className="px-2 dark"
-        classNames={{
-          backdrop:
-            "bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20",
-        }}
-        placement={isMobile ? "bottom" : "auto"}
-        isDismissable={true}
-        hideCloseButton={false}
-        onClose={() => setModalLoading(false)}
-      >
-        <ModalContent>
-          <h1 className="max-w-2xl py-4 px-4 text-2xl font-extrabold text-white">
-            {chapterTitle}
-          </h1>
-
-          <Skeleton isLoaded={modalLoading} className="rounded-xl">
-            <iframe
-              className="w-full rounded-large"
-              height={600}
-              src={verseUrl}
-            />
-          </Skeleton>
-        </ModalContent>
-      </Modal>
     </ContainerBlock>
   );
 };
