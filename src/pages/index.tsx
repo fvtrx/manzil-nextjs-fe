@@ -187,6 +187,7 @@ const Home = ({
                   <AccordionItem
                     key={`chapter-${item.chapter_id}`}
                     title={item.surahName}
+                    className="text-[#0AFDB0]"
                   >
                     {item.content.flatMap((url) => (
                       <li
@@ -211,7 +212,7 @@ const Home = ({
             {!isSurahListLoading && (
               <div className="bg-[#1d1e23] p-10 rounded-xl">
                 <Image
-                  className="rounded-md"
+                  className="border-b border-neutral-700"
                   alt=""
                   src={verseUrl}
                   width={1000}
