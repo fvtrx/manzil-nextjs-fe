@@ -55,8 +55,8 @@ function* getSurahAlBaqarah() {
             a?.verseNumber - b?.verseNumber
         );
 
-      for (let i = 0; i < mappedAlBaqarahAudioItems.length; i++) {
-        yield put(setAyahAudioList(mappedAlBaqarahAudioItems[i]));
+      for (const audioItem of mappedAlBaqarahAudioItems) {
+        yield put(setAyahAudioList(audioItem));
       }
     }
   } catch (error) {
@@ -109,8 +109,8 @@ function* getSurahAlMukminun() {
             a?.verseNumber - b?.verseNumber
         );
 
-      for (let i = 0; i < mappedAlMukminunAudioItems.length; i++) {
-        yield put(setAyahAudioList(mappedAlMukminunAudioItems[i]));
+      for (const audioItem of mappedAlMukminunAudioItems) {
+        yield put(setAyahAudioList(audioItem));
       }
     }
   } catch (error) {
@@ -139,8 +139,8 @@ function* getSurahAsSaffat() {
             a?.verseNumber - b?.verseNumber
         );
 
-      for (let i = 0; i < mappedAlSaffatAudioItems.length; i++) {
-        yield put(setAyahAudioList(mappedAlSaffatAudioItems[i]));
+      for (const audioItem of mappedAlSaffatAudioItems) {
+        yield put(setAyahAudioList(audioItem));
       }
     }
   } catch (error) {
@@ -169,8 +169,8 @@ function* getSurahAlHasyr() {
             a?.verseNumber - b?.verseNumber
         );
 
-      for (let i = 0; i < mappedAlHasyrAudioItems.length; i++) {
-        yield put(setAyahAudioList(mappedAlHasyrAudioItems[i]));
+      for (const audioItem of mappedAlHasyrAudioItems) {
+        yield put(setAyahAudioList(audioItem));
       }
     }
   } catch (error) {
