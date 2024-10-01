@@ -26,4 +26,7 @@ export const componentsOptions: Partial<Components> | null | undefined = {
   li: (props: { children?: React.ReactNode }) => {
     return <li className="mt-4 mb-2 text-base">{props?.children}</li>;
   },
+  p: (props: { children?: React.ReactNode }) => {
+    return <p className="mt-4 mb-2 text-base">{props?.children}</p>;
+  },
 };

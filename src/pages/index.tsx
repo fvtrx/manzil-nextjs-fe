@@ -252,10 +252,12 @@ const Home = ({
                     <div className="pb-2">Sheikh Mishary Rashid Al-Afa'asy</div>
                   </div>
                 }
-                style={{ borderRadius: "10px" }}
-                layout="horizontal"
+                style={{
+                  borderRadius: "10px",
+                  background: `linear-gradient(to top, #dfe9f3 0%, white 100%)`,
+                }}
+                layout="stacked"
                 customProgressBarSection={[
-                  RHAP_UI.CURRENT_TIME,
                   RHAP_UI.PROGRESS_BAR,
                   RHAP_UI.CURRENT_LEFT_TIME,
                 ]}
