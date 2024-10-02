@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, AccordionItem, Skeleton, Spinner } from "@nextui-org/react";
 import ContainerBlock from "@src/components/common/ContainerBlock/ContainerBlock";
 import HeroTitle from "@src/components/common/HeroTitle";
@@ -190,7 +192,48 @@ const Home = ({
             {isSurahListLoading && <Spinner />}
 
             {!isSurahListLoading && (
-              <Accordion isCompact variant="bordered">
+              <Accordion
+                isCompact
+                variant="bordered"
+                defaultExpandedKeys={["chapter-1"]}
+                itemClasses={{ title: "text-white font-semibold" }}
+                motionProps={{
+                  variants: {
+                    enter: {
+                      y: 0,
+                      opacity: 1,
+                      height: "auto",
+                      transition: {
+                        height: {
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                          duration: 1,
+                        },
+                        opacity: {
+                          easings: "ease",
+                          duration: 1,
+                        },
+                      },
+                    },
+                    exit: {
+                      y: -10,
+                      opacity: 0,
+                      height: 0,
+                      transition: {
+                        height: {
+                          easings: "ease",
+                          duration: 0.25,
+                        },
+                        opacity: {
+                          easings: "ease",
+                          duration: 0.3,
+                        },
+                      },
+                    },
+                  },
+                }}
+              >
                 {surahList.flatMap((item) => (
                   <AccordionItem
                     key={`chapter-${item.chapter_id}`}
