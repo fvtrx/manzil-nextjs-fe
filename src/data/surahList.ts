@@ -62,6 +62,13 @@ export const surahList: ISurahItem[] = [
 `,
       },
       {
+        ayat: "102",
+        src: "/ayat/Al-Baqarah-102.png",
+        translation: `<h1>Terjemahan</h1>
+        <p>Mereka (membelakangkan Kitab Allah) dan mengikut ajaran-ajaran sihir yang dibacakan oleh puak-puak Syaitan dalam masa pemerintahan Nabi Sulaiman, padahal Nabi Sulaiman tidak mengamalkan sihir yang menyebabkan kekufuran itu, akan tetapi puak-puak Syaitan itulah yang kafir (dengan amalan sihirnya); kerana merekalah yang mengajarkan manusia ilmu sihir dan apa yang diturunkan kepada dua malaikat: Harut dan Marut, di negeri Babil (Babylon), sedang mereka berdua tidak mengajar seseorang pun melainkan setelah mereka menasihatinya dengan berkata: "Sesungguhnya kami ini hanyalah cubaan (untuk menguji imanmu), oleh itu janganlah engkau menjadi kafir (dengan mempelajarinya)". Dalam pada itu ada juga orang-orang mempelajari dari mereka berdua: ilmu sihir yang boleh menceraikan antara seorang suami dengan isterinya, padahal mereka tidak akan dapat sama sekali memberi mudarat (atau membahayakan) dengan sihir itu seseorang pun melainkan dengan izin Allah. Dan sebenarnya mereka mempelajari perkara yang hanya membahayakan mereka dan tidak memberi manfaat kepada mereka. Dan demi sesungguhnya mereka (kaum Yahudi itu) telahpun mengetahui bahawa sesiapa yang memilih ilmu sihir itu tidaklah lagi mendapat bahagian yang baik di akhirat. Demi sesungguhnya amat buruknya apa yang mereka pilih untuk diri mereka, kalaulah mereka mengetahui. (102)</p>
+        `,
+      },
+      {
         ayat: "163",
         src: "/ayat/Al-Baqarah-163.png",
         translation: `<h1>Terjemahan</h1>
@@ -111,6 +118,16 @@ export const surahList: ISurahItem[] = [
         src: "/ayat/Al-Imran-18.png",
         translation: `<h1>Terjemahan</h1> <p>Allah menerangkan (kepada sekalian makhlukNya dengan dalil-dalil dan bukti), bahawasanya tiada Tuhan (yang berhak disembah) melainkan Dia, Yang sentiasa mentadbirkan (seluruh alam) dengan keadilan, dan malaikat-malaikat serta orang-orang yang berilmu (mengakui dan menegaskan juga yang demikian); tiada Tuhan (yang berhak disembah) melainkan Dia; Yang Maha Kuasa, lagi Maha Bijaksana. (18)</p>`,
       },
+      {
+        ayat: "26",
+        src: "/ayat/Al-Imran-26.png",
+        translation: `<h1>Terjemahan</h1> <p>Katakanlah (wahai Muhammad): "Wahai Tuhan yang mempunyai kuasa pemerintahan! Engkaulah yang memberi kuasa pemerintahan kepada sesiapa yang Engkau kehendaki, dan Engkaulah yang mencabut kuasa pemerintahan dari sesiapa yang Engkau kehendaki. Engkaulah juga yang memuliakan sesiapa yang Engkau kehendaki, dan Engkaulah yang menghina sesiapa yang Engkau kehendaki. Dalam kekuasaan Engkaulah sahaja adanya segala kebaikan. Sesungguhnya Engkau Maha Kuasa atas tiap-tiap sesuatu. (26)</p>`,
+      },
+      {
+        ayat: "27",
+        src: "/ayat/Al-Imran-27.png",
+        translation: `<h1>Terjemahan</h1> <p>Engkaulah (wahai Tuhan) yang memasukkan waktu malam ke dalam waktu siang, dan Engkaulah yang memasukkan waktu siang ke dalam waktu malam. Engkaulah juga yang mengeluarkan sesuatu yang hidup dari benda yang mati, dan Engkaulah yang mengeluarkan benda yang mati dari sesuatu yang hidup. Engkau jualah yang memberi rezeki kepada sesiapa yang Engkau kehendaki, dengan tiada hitungan hisabnya (27)</p>`,
+      },
     ],
   },
   {
@@ -118,6 +135,11 @@ export const surahList: ISurahItem[] = [
     surahName: "Al-Mukminun",
     arabic_surah_name: "المؤمنون",
     content: [
+      {
+        ayat: "115",
+        src: "/ayat/Al-Mukminun-115.png",
+        translation: `<h1>Terjemahan</h1> <p>Maka adakah patut kamu menyangka bahawa Kami hanya menciptakan kamu (dari tiada kepada ada) sahaja dengan tiada sebarang hikmat pada ciptaan itu? Dan kamu (menyangka pula) tidak akan dikembalikan kepada Kami? (115)</p>`,
+      },
       {
         ayat: "116",
         src: "/ayat/Al-Mukminun-116.png",
@@ -198,9 +220,11 @@ export const surahList: ISurahItem[] = [
     arabic_surah_name: "الحشر",
     content: [
       {
-        ayat: "22-24",
+        ayat: "21-24",
         src: "/ayat/Al-Hasyr.png",
         translation: `<h1>Terjemahan</h1>
+
+  <li>Sekiranya Kami turunkan Al-Quran ini ke atas sebuah gunung, nescaya engkau melihat gunung itu khusyuk serta pecah belah kerana takut kepada Allah. Dan (ingatlah), misal-misal perbandingan ini Kami kemukakan kepada umat manusia, supaya mereka memikirkannya. (21)</li>
 
   <li>Dia lah Allah, yang tidak ada Tuhan melainkan Dia; Yang Mengetahui perkara yang ghaib dan yang nyata; Dia lah Yang Maha Pemurah, lagi Maha Mengasihani. (22) </li>
 
@@ -217,9 +241,11 @@ export const surahList: ISurahItem[] = [
     arabic_surah_name: "الجن",
     content: [
       {
-        ayat: "3",
-        src: "/ayat/Al-Jinn-3.png",
-        translation: `<h1>Terjemahan</h1> <p>Dan (ketahuilah wahai kaum kami!) Bahawa sesungguhnya: tertinggilah kebesaran dan keagungan Tuhan kita daripada beristeri atau beranak. (3)</p>`,
+        ayat: "1-4",
+        src: "/ayat/Al-Jinn.png",
+        translation: `<h1>Terjemahan</h1> <li>Katakanlah (wahai Muhammad): "Telah diwahyukan kepadaku, bahawa sesungguhnya: satu rombongan jin telah mendengar (Al-Quran yang aku bacakan), lalu mereka (menyampaikan hal itu kepada kaumnya dengan) berkata: "Sesungguhnya kami telah mendengar Al-Quran (sebuah Kitab Suci) yang susunannya dan kandungannya sungguh menakjubkan!" (1)</li> <li>Kitab yang memberi panduan ke jalan yang betul, lalu kami beriman kepadanya, dan kami tidak sekali-kali akan mempersekutukan sesuatu makhluk dengan Tuhan kami. (2)</li> <li>Dan (ketahuilah wahai kaum kami!) Bahawa sesungguhnya: tertinggilah kebesaran dan keagungan Tuhan kita daripada beristeri atau beranak. (3)</li> <li>Dan (dengan ajaran Al-Quran nyatalah) bahawa sesungguhnya: (ketua) yang kurang akal pertimbangannya dari kalangan kita telah mengatakan terhadap Allah kata-kata yang melampaui kebenaran. (4)</li>
+
+        `,
       },
     ],
   },

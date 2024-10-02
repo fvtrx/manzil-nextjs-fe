@@ -81,7 +81,9 @@ function* getSurahAlImran() {
         })
         .filter((item) => item !== undefined);
 
-      yield put(setAyahAudioList(mappedAlImranAudioItems[0]));
+      for (const audioItem of mappedAlImranAudioItems) {
+        yield put(setAyahAudioList(audioItem));
+      }
     }
   } catch (error) {
     console.log(error);
@@ -188,14 +190,15 @@ function* getSurahAlJinn() {
     });
 
     if (audio_files) {
-      const mappedAlMukminunAudioItems = audio_files
+      const mappedAlJinnAudioItems = audio_files
         .map((item: IVerseAudio, id: number) => {
           const { data } = checkVerseKeyExists(item, id);
           return data;
         })
         .filter((item) => item !== undefined);
 
-      yield put(setAyahAudioList(mappedAlMukminunAudioItems[0]));
+      for (const audioItem of mappedAlJinnAudioItems)
+        yield put(setAyahAudioList(audioItem));
     }
   } catch (error) {
     console.log(error);

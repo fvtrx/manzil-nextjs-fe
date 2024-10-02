@@ -84,6 +84,7 @@ export enum AlBaqarahVerseKey {
   AYAH_3 = "2:3",
   AYAH_4 = "2:4",
   AYAH_5 = "2:5",
+  AYAH_102 = "2:102",
   AYAH_163 = "2:163",
   AYAH_255 = "2:255",
   AYAH_256 = "2:256",
@@ -95,9 +96,12 @@ export enum AlBaqarahVerseKey {
 
 export enum AlImranVerseKey {
   AYAH_18 = "3:18",
+  AYAH_26 = "3:26",
+  AYAH_27 = "3:27",
 }
 
 export enum AlMukminunVerseKey {
+  AYAH_115 = "23:115",
   AYAH_116 = "23:116",
   AYAH_117 = "23:117",
   AYAH_118 = "23:118",
@@ -117,13 +121,17 @@ export enum AsSaffatVerseKey {
 }
 
 export enum AlHasyrVerseKey {
+  AYAH_21 = "59:21",
   AYAH_22 = "59:22",
   AYAH_23 = "59:23",
   AYAH_24 = "59:24",
 }
 
 export enum AlJinnVerseKey {
+  AYAH_1 = "72:1",
+  AYAH_2 = "72:2",
   AYAH_3 = "72:3",
+  AYAH_4 = "72:4",
 }
 
 export const BASE_URL = process.env.NEXT_PUBLIC_QURAN_BASE_URL || "";
