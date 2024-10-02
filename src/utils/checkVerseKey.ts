@@ -20,6 +20,7 @@ export function checkVerseKeyExists(
     case AlBaqarahVerseKey.AYAH_3:
     case AlBaqarahVerseKey.AYAH_4:
     case AlBaqarahVerseKey.AYAH_5:
+    case AlBaqarahVerseKey.AYAH_102:
     case AlBaqarahVerseKey.AYAH_163:
     case AlBaqarahVerseKey.AYAH_255:
     case AlBaqarahVerseKey.AYAH_256:
@@ -37,15 +38,18 @@ export function checkVerseKeyExists(
       return { data };
 
     case AlImranVerseKey.AYAH_18:
+    case AlImranVerseKey.AYAH_26:
+    case AlImranVerseKey.AYAH_27:
       data = {
-        id: 15,
+        id: id + 100,
         surahName: "Al-Imran",
         audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: 18,
+        verseNumber: id + 1,
         chapter_id: 3,
       };
       return { data };
 
+    case AlMukminunVerseKey.AYAH_115:
     case AlMukminunVerseKey.AYAH_116:
     case AlMukminunVerseKey.AYAH_117:
     case AlMukminunVerseKey.AYAH_118:
@@ -69,7 +73,7 @@ export function checkVerseKeyExists(
     case AsSaffatVerseKey.AYAH_9:
     case AsSaffatVerseKey.AYAH_10:
       data = {
-        id: id + 100,
+        id: id + 200,
         surahName: "As-Saffat",
         audio_url: `https://verses.quran.com/${item?.url}`,
         verseNumber: id + 1,
@@ -77,6 +81,7 @@ export function checkVerseKeyExists(
       };
       return { data };
 
+    case AlHasyrVerseKey.AYAH_21:
     case AlHasyrVerseKey.AYAH_22:
     case AlHasyrVerseKey.AYAH_23:
     case AlHasyrVerseKey.AYAH_24:
@@ -89,12 +94,15 @@ export function checkVerseKeyExists(
       };
       return { data };
 
+    case AlJinnVerseKey.AYAH_1:
+    case AlJinnVerseKey.AYAH_2:
     case AlJinnVerseKey.AYAH_3:
+    case AlJinnVerseKey.AYAH_4:
       data = {
-        id: 16,
+        id: id + 300,
         surahName: "Al-Jinn",
         audio_url: `https://verses.quran.com/${item?.url}`,
-        verseNumber: 3,
+        verseNumber: id + 1,
         chapter_id: 72,
       };
       return { data };
