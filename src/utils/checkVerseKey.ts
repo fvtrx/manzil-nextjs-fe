@@ -54,7 +54,7 @@ export function checkVerseKeyExists(
     case AlMukminunVerseKey.AYAH_117:
     case AlMukminunVerseKey.AYAH_118:
       data = {
-        id: id + 1,
+        id: id + 200,
         surahName: "Al-Mukminun",
         audio_url: `https://verses.quran.com/${item?.url}`,
         verseNumber: id + 1,
@@ -73,7 +73,7 @@ export function checkVerseKeyExists(
     case AsSaffatVerseKey.AYAH_9:
     case AsSaffatVerseKey.AYAH_10:
       data = {
-        id: id + 200,
+        id: id + 300,
         surahName: "As-Saffat",
         audio_url: `https://verses.quran.com/${item?.url}`,
         verseNumber: id + 1,
@@ -99,7 +99,7 @@ export function checkVerseKeyExists(
     case AlJinnVerseKey.AYAH_3:
     case AlJinnVerseKey.AYAH_4:
       data = {
-        id: id + 300,
+        id: id + 400,
         surahName: "Al-Jinn",
         audio_url: `https://verses.quran.com/${item?.url}`,
         verseNumber: id + 1,
