@@ -281,7 +281,7 @@ const Home = ({
 
             <Skeleton
               isLoaded={isLoading}
-              className="rounded-xl dark"
+              className="rounded-xl dark w-full"
               classNames={{ base: "bg-slate-500" }}
             >
               <AudioPlayer
