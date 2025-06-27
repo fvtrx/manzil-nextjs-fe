@@ -261,7 +261,7 @@ const Home = ({
             {isSurahListLoading && <Spinner />}
 
             {!isSurahListLoading && (
-              <div className="bg-[#1d1e23] p-10 rounded-xl">
+              <div className="bg-[#1F2125] p-10 rounded-xl">
                 <OptimizedImage
                   url={verseUrl}
                   alt="Verse image"
