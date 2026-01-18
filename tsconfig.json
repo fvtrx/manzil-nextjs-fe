@@ -2,13 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": ["./src/types", "./node_modules/@types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "noImplicitAny": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -16,19 +13,15 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "@src/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@redux/*": ["./src/redux/*"]
-    },
-    "types": ["node"],
-    "sourceMap": true,
-    "outDir": "dist"
+      "@/*": ["./*"]
+    }
   },
-  "ts-node": {
-    "esm": true // «———— enabling ESM for ts-node
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
