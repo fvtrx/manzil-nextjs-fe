@@ -7,6 +7,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Add this to ensure proper asset paths
   trailingSlash: true,
+  // Force new build IDs to bust cache
+  generateBuildId: async () => {
+    return `build-${Date.now()}`;
+  },
 };
+
+module.exports = nextConfig;
