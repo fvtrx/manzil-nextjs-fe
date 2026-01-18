@@ -10,7 +10,7 @@ const nextConfig = {
   trailingSlash: true,
   // Force new build IDs to bust cache
   generateBuildId: async () => {
-    return `build-${Date.now()}`;
+    return `v2-${Date.now()}`;
   },
 };
 
