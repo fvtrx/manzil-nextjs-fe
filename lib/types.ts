@@ -31,6 +31,13 @@ export interface Audio {
   duration?: number;
 }
 
+export interface AudioState {
+  isPlaying: boolean;
+  isLoading: boolean;
+  currentTime: number;
+  duration: number;
+}
+
 export interface VerseData {
   verse: Verse;
   translation: string;

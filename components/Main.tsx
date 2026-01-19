@@ -102,7 +102,7 @@ export function Main() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 pt-24 pb-8 px-4">
       <ProgressIndicator />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto scroll-smooth">
         <HeroTitle
           title="منزل"
           subtitle="Himpunan ayat suci Al-Quran sebagai penawar dan pelindung dari segala kejahatan."
