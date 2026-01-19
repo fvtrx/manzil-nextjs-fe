@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import dynamic from "next/dynamic";
 
 const Main = dynamic(
-  () => import("@/components/Main").then((mod) => ({ default: mod.Main })),
+  () => import("@/components/Main").then((mod) => mod.Main),
   {
     ssr: false,
     loading: () => (

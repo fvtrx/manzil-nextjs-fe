@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   robots: "follow, index",
   icons: {
-    icon: "/public/favicon.ico",
-    shortcut: "/public/favicon.ico",
-    apple: "/public/apple-touch-icon.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Manzil",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     url: "https://quran-manzil.com",
     images: [
       {
-        url: "/public/manzil-logo.png",
+        url: "/manzil-logo.png",
       },
     ],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Manzil",
     description:
       "Beautiful Quran reader with Arabic text, Malay translations, and audio recitation.",
-    images: ["/public/manzil-logo.png"],
+    images: ["/manzil-logo.png"],
   },
 };
 

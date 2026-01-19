@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { useVerseStore } from "@/store/verse-store";
 import { useSwipe } from "@/hooks/useSwipe";
 import { VerseData } from "@/lib/types";
+import he from "he";
 
 interface VerseCardProps {
   verse: VerseData;
@@ -271,11 +272,11 @@ export function VerseCard({
   const cleanTranslationText = (text: string) => {
     if (!text) return "";
 
-    const txt = document.createElement("textarea");
-    txt.innerHTML = text;
+    // Decode HTML entities safely
+    const decoded = he.decode(text);
 
-    return txt.value
-      .replace(/<[^>]*>/g, "") // Remove HTML
+    return decoded
+      .replace(/<[^>]*>/g, "") // Remove HTML tags
       .replace(/\d+/g, "") // Remove numbers
       .replace(/[<>\/&;]/g, "") // Remove special chars
       .replace(/\s+/g, " ") // Clean spaces
@@ -293,8 +294,8 @@ export function VerseCard({
         transform: isMobileDevice
           ? getCardTransform()
           : stackIndex > 0
-          ? getCardTransform()
-          : "none",
+            ? getCardTransform()
+            : "none",
         opacity: isMobileDevice ? getCardOpacity() : 1,
         zIndex: getZIndex(),
         transformOrigin: "center bottom",
