@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Amiri } from "next/font/google";
 
 const inter = Inter({
@@ -60,7 +61,22 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        {children}
+        <Script
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-id="fvtrx"
+          data-description="Support me on Buy me a coffee!"
+          data-message="Assalamualaikum w.b.t. Terima kasih kerana sudi singgah ke Quran-Manzil.com! Jika anda ingin menyalurkan sumbangan demi tujuan penambahbaikan laman Quran-Manzil ini, boleh terus salurkan sumbangan anda melalui widget Buy Me A Coffee saya ini 😊"
+          data-color="#40DCA5"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18"
+          strategy="lazyOnload"
+        />
+      </body>
     </html>
   );
 }
