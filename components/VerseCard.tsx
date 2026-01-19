@@ -42,6 +42,10 @@ export function VerseCard({
   const [isAnimating, setIsAnimating] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
 
+  // Track initial drag position to determine swipe vs scroll intent
+  const dragStartPos = useRef({ x: 0, y: 0 });
+  const [isHorizontalDrag, setIsHorizontalDrag] = useState(false);
+
   const {
     audioState,
     setAudioRef,
@@ -64,33 +68,50 @@ export function VerseCard({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Enhanced swipe handlers with animation support (mobile only)
+  // Enhanced swipe handlers with better sensitivity control (mobile only)
   const swipeHandlers = useSwipe({
     onSwipeLeft: () => {
-      if (!isActive || !isMobileDevice) return;
+      if (!isActive || !isMobileDevice || !isHorizontalDrag) return;
       animateSwipeExit("left");
       setTimeout(nextVerse, 200);
     },
     onSwipeRight: () => {
-      if (!isActive || !isMobileDevice) return;
+      if (!isActive || !isMobileDevice || !isHorizontalDrag) return;
       animateSwipeExit("right");
       setTimeout(previousVerse, 200);
     },
-    threshold: 100,
+    threshold: 150, // Increased threshold for less sensitivity
     onDragStart: () => {
       if (!isActive || !isMobileDevice) return;
       setIsDragging(true);
+      setIsHorizontalDrag(false);
+      dragStartPos.current = { x: 0, y: 0 };
       onSwipeStart?.();
     },
     onDragEnd: () => {
       if (!isMobileDevice) return;
       setIsDragging(false);
       setDragOffset({ x: 0, y: 0 });
+      setIsHorizontalDrag(false);
       onSwipeEnd?.();
     },
     onDrag: (offset) => {
       if (!isActive || !cardRef.current || !isMobileDevice) return;
-      setDragOffset(offset);
+
+      // Determine if this is a horizontal swipe or vertical scroll
+      const absX = Math.abs(offset.x);
+      const absY = Math.abs(offset.y);
+
+      // Only consider it a horizontal drag if X movement is significantly greater than Y
+      // This prevents accidental swipes when trying to scroll long content
+      if (absX > absY * 1.5 && absX > 30) {
+        setIsHorizontalDrag(true);
+        setDragOffset(offset);
+      } else if (absY > absX) {
+        // Mostly vertical movement - allow normal scrolling
+        setIsHorizontalDrag(false);
+        setDragOffset({ x: 0, y: 0 });
+      }
     },
   });
 
@@ -136,12 +157,15 @@ export function VerseCard({
     const baseTranslateY = isActive ? 0 : stackIndex * -8;
     const baseTranslateX = isActive ? 0 : 0;
 
-    // Apply drag offset only to active card on mobile
-    const dragX = isActive && isMobileDevice ? dragOffset.x : 0;
-    const dragY = isActive && isMobileDevice ? dragOffset.y : 0;
+    // Apply drag offset only to active card on mobile and only for horizontal drags
+    const dragX =
+      isActive && isMobileDevice && isHorizontalDrag ? dragOffset.x : 0;
+    const dragY =
+      isActive && isMobileDevice && isHorizontalDrag ? dragOffset.y : 0;
 
     // Add rotation based on drag for more natural feel (mobile only)
-    const rotation = isActive && isMobileDevice ? dragOffset.x * 0.1 : 0;
+    const rotation =
+      isActive && isMobileDevice && isHorizontalDrag ? dragOffset.x * 0.1 : 0;
 
     return `translateX(${baseTranslateX + dragX}px) translateY(${
       baseTranslateY + dragY
@@ -154,8 +178,8 @@ export function VerseCard({
       return Math.max(0.4, 1 - stackIndex * 0.2);
     }
 
-    // Only apply drag opacity on mobile
-    if (isDragging && isMobileDevice) {
+    // Only apply drag opacity on mobile for horizontal drags
+    if (isDragging && isMobileDevice && isHorizontalDrag) {
       const maxDrag = 200;
       const opacity = 1 - (Math.abs(dragOffset.x) / maxDrag) * 0.3;
       return Math.max(0.7, opacity);
@@ -312,7 +336,7 @@ export function VerseCard({
               ? "cursor-grab active:cursor-grabbing hover:shadow-xl"
               : "cursor-pointer hover:shadow-md"
           }
-          ${isDragging && isMobileDevice ? "shadow-2xl" : ""}
+          ${isDragging && isMobileDevice && isHorizontalDrag ? "shadow-2xl" : ""}
           ${isAnimating ? "transition-transform duration-300" : ""}
         `}
         {...(isActive && isMobileDevice ? swipeHandlers : {})}
@@ -334,18 +358,49 @@ export function VerseCard({
             </p>
           </div>
 
-          {/* Arabic Text */}
-          <div className="mb-8 p-6 bg-white rounded-lg border border-emerald-100">
-            <p
-              className="text-2xl md:text-3xl text-right leading-loose text-emerald-900 font-medium gap-4"
-              style={{
-                fontFamily: "Amiri, serif",
-                direction: "rtl",
-                lineHeight: "2.5",
-              }}
-            >
-              {verse.verse.text_uthmani} ({verse.verse.verse_number})
-            </p>
+          {/* Arabic Text with Focus Effect */}
+          <div
+            className={`
+              mb-8 p-6 rounded-lg border transition-all duration-500
+              ${
+                isActive && audioState.isPlaying
+                  ? "bg-white border-emerald-300 shadow-lg shadow-emerald-100 ring-2 ring-emerald-200 ring-opacity-50"
+                  : "bg-white border-emerald-100"
+              }
+            `}
+          >
+            <div className="relative">
+              {/* Animated glow effect when audio is playing */}
+              {isActive && audioState.isPlaying && (
+                <div
+                  className="absolute inset-0 -z-10 rounded-lg animate-pulse"
+                  style={{
+                    background:
+                      "radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%)",
+                    animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                  }}
+                />
+              )}
+
+              <p
+                className={`
+                  text-2xl md:text-3xl text-right leading-loose text-emerald-900 font-medium gap-4
+                  transition-all duration-500
+                  ${
+                    isActive && audioState.isPlaying
+                      ? "scale-[1.02] transform"
+                      : ""
+                  }
+                `}
+                style={{
+                  fontFamily: "Amiri, serif",
+                  direction: "rtl",
+                  lineHeight: "2.5",
+                }}
+              >
+                {verse.verse.text_uthmani} ({verse.verse.verse_number})
+              </p>
+            </div>
           </div>
 
           {/* Malay Translation */}
@@ -421,12 +476,12 @@ export function VerseCard({
         </CardContent>
       </Card>
 
-      {/* Swipe indicators for active card (mobile only) */}
-      {isActive && isDragging && isMobileDevice && (
+      {/* Swipe indicators for active card (mobile only) - Only show for horizontal drags */}
+      {isActive && isDragging && isMobileDevice && isHorizontalDrag && (
         <>
           <div
             className={`absolute top-1/2 left-4 transform -translate-y-1/2 transition-opacity duration-200 ${
-              dragOffset.x > 50 ? "opacity-100" : "opacity-30"
+              dragOffset.x > 80 ? "opacity-100" : "opacity-30"
             }`}
           >
             <div className="bg-emerald-500 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg">
@@ -435,7 +490,7 @@ export function VerseCard({
           </div>
           <div
             className={`absolute top-1/2 right-4 transform -translate-y-1/2 transition-opacity duration-200 ${
-              dragOffset.x < -50 ? "opacity-100" : "opacity-30"
+              dragOffset.x < -80 ? "opacity-100" : "opacity-30"
             }`}
           >
             <div className="bg-emerald-500 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg">
