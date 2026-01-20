@@ -1,13 +1,5 @@
 import { create } from "zustand";
-import { VerseData } from "@/lib/types";
-import { ALL_VERSES } from "@/lib/verses-data";
-
-interface AudioState {
-  isPlaying: boolean;
-  isLoading: boolean;
-  currentTime: number;
-  duration: number;
-}
+import { VerseData, AudioState } from "@/lib/types";
 
 interface VerseStore {
   currentIndex: number;

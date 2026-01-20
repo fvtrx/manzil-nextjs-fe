@@ -89,7 +89,7 @@ export function Main() {
           <h2 className="text-2xl font-semibold text-emerald-600 mb-2">
             No Verses Found
           </h2>
-          <p className="text-emerald-500">Please check your configuration.</p>
+          <p className="text-emerald-500">Please try again.</p>
         </div>
       </div>
     );
@@ -102,11 +102,8 @@ export function Main() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 pt-24 pb-8 px-4">
       <ProgressIndicator />
 
-      <div className="max-w-4xl mx-auto">
-        <HeroTitle
-          title="منزل"
-          subtitle="Himpunan ayat suci Al-Quran sebagai penawar dan pelindung dari segala kejahatan."
-        />
+      <div className="max-w-4xl mx-auto transition-all">
+        <HeroTitle />
 
         {/* Mobile: Stacked layout with absolute positioning */}
         <div className="block md:hidden">
