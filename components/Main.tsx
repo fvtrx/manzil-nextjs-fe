@@ -103,10 +103,7 @@ export function Main() {
       <ProgressIndicator />
 
       <div className="max-w-4xl mx-auto transition-all">
-        <HeroTitle
-          title="منزل"
-          subtitle="Himpunan ayat suci Al-Quran sebagai penawar dan pelindung dari segala kejahatan."
-        />
+        <HeroTitle />
 
         {/* Mobile: Stacked layout with absolute positioning */}
         <div className="block md:hidden">
