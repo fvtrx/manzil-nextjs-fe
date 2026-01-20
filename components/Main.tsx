@@ -8,6 +8,7 @@ import { useVerseStore } from "@/store/verse-store";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroTitle from "./HeroTitle";
 import { getVersesQueryOptions } from "@/query/getVersesQueryOptions";
+import { useMobileDetection } from "@/hooks/verse-card/useMobileDetection";
 
 export function Main() {
   const { currentIndex, verses, setVerses } = useVerseStore();
@@ -70,7 +71,7 @@ export function Main() {
   const visibleVerses = verses.slice(currentIndex, currentIndex + 1);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 pt-24 pb-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-amber-50 py-16 px-4">
       <ProgressIndicator />
 
       <div className="max-w-4xl mx-auto transition-all">
@@ -111,8 +112,9 @@ export function Main() {
 
         {/* Navigation Hint */}
         <div className="text-center mt-6 text-sm text-emerald-500">
+          <p className="font-bold">For mobile devices:</p>
           <p>Swipe left for next verse • Swipe right for previous verse</p>
-          <p className="mt-2">
+          <p className="mt-4">
             Verse {currentIndex + 1} of {verses.length}
           </p>
         </div>
