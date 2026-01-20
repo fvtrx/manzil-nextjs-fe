@@ -5,11 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { VerseCard } from "./VerseCard";
 import { ProgressIndicator } from "./ProgressIndicator";
 import { useVerseStore } from "@/store/verse-store";
-import { fetchVerse } from "@/lib/api";
-import { ALL_VERSES, CHAPTER_NAMES } from "@/lib/verses-data";
-import { VerseData } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroTitle from "./HeroTitle";
+import { getVersesQueryOptions } from "@/query/getVersesQueryOptions";
 
 export function Main() {
   const { currentIndex, verses, setVerses } = useVerseStore();
@@ -19,34 +17,7 @@ export function Main() {
     data: versesData,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["verses", ALL_VERSES],
-    queryFn: async () => {
-      const promises = ALL_VERSES.map(async (verseKey) => {
-        const [chapterStr, verseStr] = verseKey.split(":");
-        const chapterNumber = parseInt(chapterStr);
-        const verseNumber = parseInt(verseStr);
-
-        const verse = await fetchVerse(chapterNumber, verseNumber);
-        const chapterInfo =
-          CHAPTER_NAMES[chapterNumber as keyof typeof CHAPTER_NAMES];
-
-        const verseData: VerseData = {
-          verse,
-          translation:
-            verse.translations?.[0]?.text || "Translation not available",
-          audioUrl: `https://verses.quran.com/${verse.audio?.url}`,
-          chapterName: chapterInfo?.simple || `Chapter ${chapterNumber}`,
-          chapterArabic: chapterInfo?.arabic || `السورة ${chapterNumber}`,
-        };
-
-        return verseData;
-      });
-
-      return Promise.all(promises);
-    },
-    staleTime: 1000 * 60 * 60, // 1 hour
-  });
+  } = useQuery(getVersesQueryOptions());
 
   useEffect(() => {
     if (versesData) {
